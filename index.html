@@ -1,310 +1,428 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abhay Tiwari | Portfolio</title>
-    <!-- Favicon -->
-    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-<!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- CSS -->
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="contact.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Abhay Tiwari | Portfolio</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="assets/favicon.ico" type="image/x-icon" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="contact.css"/>
+
+  <!-- Minimal inline styles for scroll reveal + modal + tabs -->
+  <style>
+    /* --- Scroll reveal --- */
+    .reveal { opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; will-change:opacity, transform; }
+    .reveal.in-view { opacity:1; transform:translateY(0); }
+    [data-reveal-group] > .reveal { transition-delay: var(--reveal-delay, 0s); }
+
+    /* Back to top */
+    #backToTop { display:none; }
+
+    /* First-visit modal */
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: none; align-items: center; justify-content: center; z-index: 10000; }
+    .modal { width: min(92vw, 520px); background: #fff; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,.25); overflow: hidden; font-family: Poppins, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif; }
+    .modal header { padding: 18px 22px; background: linear-gradient(135deg, #111, #222); color: #fff; font-weight: 600; letter-spacing:.2px; }
+    .modal .content { padding: 18px 22px; color:#333; }
+    .modal .actions { padding: 16px 22px; display:flex; gap:10px; justify-content:flex-end; background:#fafafa; }
+    .btn { border: 0; border-radius: 10px; padding: 10px 14px; cursor: pointer; font-weight: 600; }
+    .btn-primary { background:#111; color:#fff; }
+    .btn-ghost { background: #eee; color:#111; }
+    @media (prefers-color-scheme: dark) {
+      .modal { background:#0e0e0f; color:#eaeaea; }
+      .modal header { background: linear-gradient(135deg, #0a0a0a, #1a1a1a); }
+      .modal .actions { background:#121212; }
+      .btn-ghost { background:#1f1f1f; color:#eaeaea; }
+    }
+
+    /* Tabs */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .about-tabs { display:flex; gap:10px; margin:18px 0; flex-wrap:wrap; }
+    .tab-item.active { box-shadow: 0 6px 14px rgba(0,0,0,.12); transform: translateY(-1px); }
+  </style>
 </head>
 <body>
-    <!-- Preloader -->
-    <div class="preloader">
-        <div class="loader"></div>
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="header reveal">
+    <div class="container">
+      <div class="row justify-content-between align-items-center">
+        <div class="logo">
+          <a href="index.html">Abhay_virus</a>
+        </div>
+        <div class="hamburger-btn outer-shadow hover-in-shadow">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Menu -->
+  <nav class="nav-menu">
+    <div class="close-nav-menu outer-shadow hover-in-shadow">&times;</div>
+    <div class="nav-menu-inner">
+      <ul>
+        <li><a href="#home" class="link-item inner-shadow active">Home</a></li>
+        <li><a href="#about" class="link-item outer-shadow hover-in-shadow">About</a></li>
+        <li><a href="#services" class="link-item outer-shadow hover-in-shadow">Services</a></li>
+        <li><a href="#portfolio" class="link-item outer-shadow hover-in-shadow">Portfolio</a></li>
+        <li><a href="#contact" class="link-item outer-shadow hover-in-shadow">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div class="fade-out-effect"></div>
+
+  <!-- Theme Toggle + Back To Top -->
+  
+  <button id="backToTop" class="outer-shadow hover-in-shadow"
+    aria-label="Back to top" title="Back to top"
+    style="position:fixed;right:16px;bottom:24px;z-index:9999;border-radius:50%;width:44px;height:44px;display:none;place-items:center;background:#fff;">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Home Section -->
+  <section class="home-section section active" id="home">
+    <div class="container">
+      <div class="row full-screen align-items-center" data-reveal-group>
+        <div class="home-text reveal" style="--reveal-delay:.05s">
+          <p>Hello, I'm</p>
+          <h1>Abhay Tiwari</h1>
+          <h2>Web Developer & Designer</h2>
+          <a href="#about" class="link-item btn-1 outer-shadow hover-in-shadow">More About Me</a>
+        </div>
+        <div class="home-img reveal" style="--reveal-delay:.15s">
+          <div class="img-box inner-shadow">
+            <img src="viruses1.jpeg" class="outer-shadow" alt="profile-pic">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <div class="row">
+        <div class="section-title reveal">
+          <h2 data-heading="main info">About Me</h2>
+        </div>
+      </div>
+      <div class="row" data-reveal-group>
+        <div class="about-img reveal" style="--reveal-delay:.05s">
+          <div class="img-box inner-shadow">
+            <img src="viruse3.jpeg" class="outer-shadow" alt="profile-pic">
+          </div>
+          <!-- Social Links -->
+          <div class="social-links">
+            <a href="https://www.facebook.com/share/1AVs5XRKbX/" class="outer-shadow"><i class="fab fa-facebook"></i></a>
+            <a href="https://x.com/bytecraft_abhay" class="outer-shadow"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/cybe.rboi/" class="outer-shadow"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/authwall?trk=bf&trkInfo=AQG1EBfnHNBRDQAAAZe0bpcgYdims_U5V15iFxLaA7EqI6mW2Iz49j1LGNW2fSsuQhrTHFphLzL4-k0CBztfqOs0QskLGSp7Vh2-wQzp9gfFGIgnI3v6Cy_wY1MHzskg30E4Rdw=&original_referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fabhay-tiwari-545a57358" class="outer-shadow"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://github.com/abhayd95" class="outer-shadow"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+
+        <div class="about-info reveal" style="--reveal-delay:.15s">
+          <p><span>Hi! I'm Abhay Tiwari, a passionate web developer and designer with expertise in creating modern and responsive websites.</span>
+            I have experience in HTML5, CSS3, JavaScript, and various frameworks. My goal is to build applications that are scalable and efficient under the hood while providing engaging, pixel-perfect user experiences.</p>
+          <p>When I'm not coding, you'll find me exploring new technologies, contributing to open-source projects, or enjoying outdoor activities.</p>
+
+          <div class="skills">
+            <h3>Skills</h3>
+            <div class="skill-item">HTML5</div>
+            <div class="skill-item">CSS3</div>
+            <div class="skill-item">JavaScript</div>
+            <div class="skill-item">PHP</div>
+            <div class="skill-item">Laravel</div>
+            <div class="skill-item">React</div>
+            <div class="skill-item">Node.js</div>
+            <div class="skill-item">MySQL</div>
+          </div>
+
+          <!-- TABS -->
+          <div class="about-tabs">
+            <button type="button" class="tab-item outer-shadow hover-in-shadow active" data-target=".education">Education</button>
+            <button type="button" class="tab-item outer-shadow hover-in-shadow" data-target=".experience">Experience</button>
+          </div>
+
+          <!-- Education -->
+          <div class="tab-content active education">
+            <div class="timeline">
+              <div class="timeline-item">
+                <h4>Bachelor's of Computer Application</h4>
+                <p>Allahabad University</p>
+                <span>2022 – 2025</span>
+              </div>
+              <div class="timeline-item">
+                <h4>Web Development Certification</h4>
+                <p>Coding Institute</p>
+                <span>2025</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Experience -->
+          <div class="tab-content experience" id="contact">
+            <div class="timeline">
+              <div class="timeline-item">
+                <h4>Full-Stack Developer</h4>
+                <p>CoreMentors Pvt. Ltd. (RWS – Ram Web Solution)</p>
+                <span>2025 – Present</span>
+                <p>Building production web apps, integrating APIs, and handling deployments.</p>
+              </div>
+              <div class="timeline-item">
+                <h4>Express.js – 1 Year Experience</h4>
+                <p>Backend & API Development</p>
+                <span>Ongoing</span>
+                <p>REST APIs, JWT auth, middleware, routing, error handling, performance tuning.</p>
+              </div>
+            </div>
+          </div>
+
+          <a href="Abhay tiwari-5.pdf" class="btn-1 outer-shadow hover-in-shadow">Download Resume</a>
+          <a href="form.html" class="link-item btn-1 outer-shadow hover-in-shadow">Hire Me</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="service-section" id="services">
+    <div class="container">
+      <div class="row">
+        <div class="section-title reveal">
+          <h2 data-heading="services">What I Do</h2>
+        </div>
+      </div>
+      <div class="row" data-reveal-group>
+        <div class="service-item reveal" style="--reveal-delay:.05s">
+          <div class="service-item-inner outer-shadow">
+            <div class="icon inner-shadow"><i class="fas fa-code"></i></div>
+            <h3>Web Development</h3>
+            <p>Building responsive and scalable websites using modern technologies and best practices.</p>
+          </div>
+        </div>
+        <div class="service-item reveal" style="--reveal-delay:.10s">
+          <div class="service-item-inner outer-shadow">
+            <div class="icon inner-shadow"><i class="fas fa-paint-brush"></i></div>
+            <h3>Web Design</h3>
+            <p>Creating beautiful, user-friendly interfaces with attention to detail and user experience.</p>
+          </div>
+        </div>
+        <div class="service-item reveal" style="--reveal-delay:.15s">
+          <div class="service-item-inner outer-shadow">
+            <div class="icon inner-shadow"><i class="fas fa-mobile-alt"></i></div>
+            <h3>Responsive Design</h3>
+            <p>Ensuring websites look great and function well on all devices and screen sizes.</p>
+          </div>
+        </div>
+        <div class="service-item reveal" style="--reveal-delay:.20s">
+          <div class="service-item-inner outer-shadow">
+            <div class="icon inner-shadow"><i class="fas fa-search"></i></div>
+            <h3>SEO Optimization</h3>
+            <p>Improving website visibility and ranking on search engines through best practices.</p>
+          </div>
+        </div>
+        <div class="service-item reveal" style="--reveal-delay:.25s">
+          <div class="service-item-inner outer-shadow">
+            <div class="icon inner-shadow"><i class="fas fa-bullhorn"></i></div>
+            <h3>Digital Marketing</h3>
+            <p>Promoting products or services through digital channels to reach potential customers.</p>
+          </div>
+        </div>
+        <div class="service-item reveal" style="--reveal-delay:.30s">
+          <div class="service-item-inner outer-shadow">
+            <div class="icon inner-shadow"><i class="fas fa-server"></i></div>
+            <h3>Hosting & Maintenance</h3>
+            <p>Providing reliable hosting solutions and ongoing website maintenance services.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Section -->
+  <section class="portfolio-section" id="portfolio">
+    <div class="container">
+      <div class="row">
+        <div class="section-title reveal">
+          <h2 data-heading="portfolio">Recent Works</h2>
+        </div>
+      </div>
     </div>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="row justify-content-between align-items-center">
-                <div class="logo">
-                    <a href="index.html">Abhay_virus</a>
-                    <!-- <img src="viruse3.jpeg" alt="viruse3" class="container"> -->
-                </div>
-                <div class="hamburger-btn outer-shadow hover-in-shadow">
-                    <span></span>
-                </div>
-            </div>
+    <section>
+      <div class="portfolio-items row" data-reveal-group>
+        <div class="portfolio-item outer-shadow reveal" style="--reveal-delay:.05s">
+          <div class="portfolio-img"><img src="rws2.jpg" alt="Project 1"></div>
+          <div class="portfolio-info">
+            <h4>Abhay-Properties-Website</h4>
+            <p>Real estate website for property listings, built with React and Node.js. Features property search, user authentication, and admin dashboard.</p>
+            <a href="https://abhayproperties.netlify.app/" target="_blank" class="btn-1 outer-shadow hover-in-shadow">View Website</a>
+          </div>
         </div>
-    </header>
 
-    <!-- Navigation Menu -->
-    <nav class="nav-menu">
-        <div class="close-nav-menu outer-shadow hover-in-shadow">&times;</div>
-        <div class="nav-menu-inner">
-            <ul>
-                <li><a href="#home" class="link-item inner-shadow active">Home</a></li>
-                <li><a href="#about" class="link-item outer-shadow hover-in-shadow">About</a></li>
-                <li><a href="#services" class="link-item outer-shadow hover-in-shadow">Services</a></li>
-                <li><a href="#portfolio" class="link-item outer-shadow hover-in-shadow">Portfolio</a></li>
-                <!-- <li><a href="#testimonial" class="link-item outer-shadow hover-in-shadow">Testimonials</a></li> -->
-                <li><a href="#contact" class="link-item outer-shadow hover-in-shadow">Contact</a></li>
-            </ul>
+        <div class="portfolio-item outer-shadow reveal" style="--reveal-delay:.12s">
+          <div class="portfolio-img"><img src="eye.jpeg" alt="Project 2"></div>
+          <div class="portfolio-info">
+            <h4>Currency Converter Website</h4>
+            <p>A simple and interactive currency converter that allows users to convert between different currencies in real-time. Built with HTML, CSS, and JavaScript, it fetches live exchange rates from an API and provides a user-friendly interface for quick conversions.</p>
+            <a href="carancy.html" target="_blank" class="btn-1 outer-shadow hover-in-shadow">View Website</a>
+          </div>
         </div>
-    </nav>
-    <div class="fade-out-effect"></div>
-    <!-- home secton -->
-     <section class="home-section section active" id="home">
-        <div class="container">
-            <div class="row full-screen align-items-center">
-                <div class="home-text">
-                    <p>Hello, I'm</p>
-                    <h1>Abhay Tiwari</h1>
-                    <h2>Web Developer & Designer</h2>
-                    <a href="#about" class="link-item btn-1 outer-shadow hover-in-shadow">More About Me</a>
-                </div>
-                <div class="home-img">
-                    <div class="img-box inner-shadow">
-                        <img src="viruses1.jpeg" class="outer-shadow" alt="profile-pic">
-                    </div>
-                </div>
-            </div>
+
+        <div class="portfolio-item outer-shadow reveal" style="--reveal-delay:.19s">
+          <div class="portfolio-img"><img src="portfolio.jpg" alt="Project 3"></div>
+          <div class="portfolio-info">
+            <h4>prima workforce</h4>
+            <p>Prima Workforce is a job portal platform designed to connect employers with job seekers efficiently. Developed with React and Node.js, it features job listings, application tracking, and user authentication for both recruiters and candidates.</p>
+            <a href="https://strong-basbousa-72634d.netlify.app/" class="btn-1 outer-shadow hover-in-shadow">View Website</a>
+          </div>
         </div>
+      </div>
     </section>
-    <!-- About Section -->
-    <section class="about-section" id="about">
-        
-        <div class="container">
-            <div class="row">
-                <div class="section-title">
-                    <h2 data-heading="main info">About Me</h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="about-img">
-                    <div class="img-box inner-shadow">
-                        <img src="viruse3.jpeg" class="outer-shadow" alt="profile-pic">
-                    </div>
-                    <!-- Social Links -->
-                    <div class="social-links">
-                        <a href="https://www.facebook.com/share/1AVs5XRKbX/" class="outer-shadow "><i class="fab fa-facebook"></i></a>
-                        <a href="https://x.com/bytecraft_abhay" class="outer-shadow "><i class="fab fa-twitter"></i></a>
-                        <a href="https://www.instagram.com/cybe.rboi/" class="outer-shadow "><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.linkedin.com/authwall?trk=bf&trkInfo=AQG1EBfnHNBRDQAAAZe0bpcgYdims_U5V15iFxLaA7EqI6mW2Iz49j1LGNW2fSsuQhrTHFphLzL4-k0CBztfqOs0QskLGSp7Vh2-wQzp9gfFGIgnI3v6Cy_wY1MHzskg30E4Rdw=&original_referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fabhay-tiwari-545a57358" class="outer-shadow"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://github.com/abhayd95" class="outer-shadow"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-                <div class="about-info">
-                    <p><span>Hi! I'm Abhay Tiwari, a passionate web developer and designer with expertise in creating modern and responsive websites.</span>
-                    I have experience in HTML5, CSS3, JavaScript, and various frameworks. My goal is to build applications that are scalable and efficient under the hood while providing engaging, pixel-perfect user experiences.</p>
-                    <p>When I'm not coding, you'll find me exploring new technologies, contributing to open-source projects, or enjoying outdoor activities.</p>
-                    <div class="skills">
-                        <h3>Skills</h3>
-                        <div class="skill-item">HTML5</div>
-                        <div class="skill-item">CSS3</div>
-                        <div class="skill-item">JavaScript</div>
-                        <div class="skill-item">PHP</div>
-                        <div class="skill-item">Laravel</div>
-                        <div class="skill-item">React</div>
-                        <div class="skill-item">Node.js</div>
-                        <div class="skill-item">MySQL</div>
-                    </div>
-                    <div class="about-tabs">
-                        <button type="button" class="tab-item outer-shadow hover-in-shadow active" data-target=".education">Education and Experience</button>
-                        <!-- <button type="button" class="tab-item outer-shadow hover-in-shadow" data-target=".experience">Experience</button> -->
-                    </div>
-                    <!-- Education -->
-                    <div class="tab-content active education">
-                        <div class="timeline">
-                            <div class="timeline-item">
-                                <h4>Bachelor's  of  Computer application</h4>
-                                <p>Allahabad University</p>
-                                <span>2022- 2025</span>
-                            </div>
-                            <div class="timeline-item">
-                                <h4>Web Development Certification</h4>
-                                <p>Coding Institute</p>
-                                <span>2025</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Experience -->
-                    <div class="tab-content experience">
-                        <div class="timeline">
-                            <div class="timeline-item" id="contact">
-                                <h4>Fullstack Developer</h4>
-                                <p>Tech Solutions Inc.</p>
-                                <span>2025 - Present</span>
-                                <p>Developed responsive web applications using modern JavaScript frameworks.</p>
-                            </div>
-                            <div class="timeline-item">
-                                <h4>Web Developer Intern</h4>
-                                <p>Digital Creations</p>
-                                <span>2025</span>
-                                <p>Assisted in building and maintaining client websites.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- <a href="assets/cv.pdf" class="btn-1 outer-shadow hover-in-shadow">Download CV</a> -->
-                     <a href="Abhay tiwari-5.pdf" class="btn-1 outer-shadow hover-in-shadow">Download Resume</a>
-                    <a href="form.html" class="link-item btn-1 outer-shadow hover-in-shadow" >Hire Me</a>
-                </div>
-            </div>
-        </div>
-    </section>
+  </section>
 
-    <!-- Services Section -->
-    <section class="service-section" id="services">
-        <div class="container">
-            <div class="row">
-                <div class="section-title">
-                    <h2 data-heading="services">What I Do</h2>
-                </div>
-            </div>
-            <div class="row">
-                <!-- Service Item -->
-                <div class="service-item">
-                    <div class="service-item-inner outer-shadow">
-                        <div class="icon inner-shadow">
-                            <i class="fas fa-code"></i>
-                        </div>
-                        <h3>Web Development</h3>
-                        <p>Building responsive and scalable websites using modern technologies and best practices.</p>
-                    </div>
-                </div>
-                <!-- Service Item -->
-                <div class="service-item">
-                    <div class="service-item-inner outer-shadow">
-                        <div class="icon inner-shadow">
-                            <i class="fas fa-paint-brush"></i>
-                        </div>
-                        <h3>Web Design</h3>
-                        <p>Creating beautiful, user-friendly interfaces with attention to detail and user experience.</p>
-                    </div>
-                </div>
-                <!-- Service Item -->
-                <div class="service-item">
-                    <div class="service-item-inner outer-shadow">
-                        <div class="icon inner-shadow">
-                            <i class="fas fa-mobile-alt"></i>
-                        </div>
-                        <h3>Responsive Design</h3>
-                        <p>Ensuring websites look great and function well on all devices and screen sizes.</p>
-                    </div>
-                </div>
-                <!-- Service Item -->
-                <div class="service-item">
-                    <div class="service-item-inner outer-shadow">
-                        <div class="icon inner-shadow">
-                            <i class="fas fa-search"></i>
-                        </div>
-                        <h3>SEO Optimization</h3>
-                        <p>Improving website visibility and ranking on search engines through best practices.</p>
-                    </div>
-                </div>
-                <!-- Service Item -->
-                <div class="service-item">
-                    <div class="service-item-inner outer-shadow">
-                        <div class="icon inner-shadow">
-                            <i class="fas fa-bullhorn"></i>
-                        </div>
-                        <h3>Digital Marketing</h3>
-                        <p>Promoting products or services through digital channels to reach potential customers.</p>
-                    </div>
-                </div>
-                <!-- Service Item -->
-                <div class="service-item">
-                    <div class="service-item-inner outer-shadow">
-                        <div class="icon inner-shadow">
-                            <i class="fas fa-server"></i>
-                        </div>
-                        <h3>Hosting & Maintenance</h3>
-                        <p>Providing reliable hosting solutions and ongoing website maintenance services.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <br><br><br>
 
-    <!-- Portfolio Section -->
-    <section class="portfolio-section" id="portfolio">
-        <div class="container">
-            <div class="row">
-                <div class="section-title">
-                    <h2 data-heading="portfolio">Recent Works</h2>
-                </div>
-            </div>
-        </div>
-        <section>
-            <div class="portfolio-items row">
-                <!-- Portfolio Item 1 -->
-                <div class="portfolio-item outer-shadow">
-                    <div class="portfolio-img">
-                        <img src="rws2.jpg" alt="Project 1">
-                    </div>
-                    <div class="portfolio-info">
-                        <h4>Abhay-Properties-Website</h4>
-                        <p>Real estate website for property listings, built with React and Node.js. Features property search, user authentication, and admin dashboard.</p>
-                        <!-- <a href="https://github.com/abhayd95/personal-blog" target="_blank" class="btn-1 outer-shadow hover-in-shadow">View Code</a> -->
-                        <a href="https://abhayproperties.netlify.app/" target="_blank" class="btn-1 outer-shadow hover-in-shadow">View Website</a>
-                    </div>
-                </div>
-                <!-- Portfolio Item 2 -->
-                <div class="portfolio-item outer-shadow">
-                    <div class="portfolio-img">
-                        <img src="eye.jpeg" alt="Project 2">
-                    </div>
-                    <div class="portfolio-info">
-                        <h4>Currency Converter Website</h4>
-                        <p>A simple and interactive currency converter that allows users to convert between different currencies in real-time. Built with HTML, CSS, and JavaScript, it fetches live exchange rates from an API and provides a user-friendly interface for quick conversions.</p>
-                        <!-- <a href="https://github.com/abhayd95/ecommerce-platform" target="_blank" class="btn-1 outer-shadow hover-in-shadow">View Code</a> -->
-                        <a href="carancy.html" target="_blank" class="btn-1 outer-shadow hover-in-shadow">View Website</a>
-                    </div>
-                </div>
-                <!-- Portfolio Item 3 -->
-                <div class="portfolio-item outer-shadow">
-                    <div class="portfolio-img">
-                        <img src="portfolio.jpg" alt="Project 3">
-                    </div>
-                    <div class="portfolio-info">
-                        <h4>prima workforce</h4>
-                        <p>Prima Workforce is a job portal platform designed to connect employers with job seekers efficiently. Developed with React and Node.js, it features job listings, application tracking, and user authentication for both recruiters and candidates.</p>
+  <!-- Scripts -->
+  <script src="script.js"></script>
 
-                        <!-- <a href="https://github.com/abhayd95/portfolio" target="_blank" class="btn-1 outer-shadow hover-in-shadow">View Code</a> -->
-                        <a href="https://strong-basbousa-72634d.netlify.app/" class="btn-1 outer-shadow hover-in-shadow">View Website</a>
-                    </div>
-                </div>
-                
-            </div>
-        </section>
-        </div>
-        
-    <br><br><br>
-   
-    <script src="script.js"></script>
-
-<footer>
+  <footer class="reveal" style="--reveal-delay:.05s">
     <div class="footer-content">
-        <div class="container">
-            <div class="footer-row">
-                <div class="footer-about">
-                    <h3>Abhay Tiwari</h3>
-                    <p>Passionate Web Developer & Designer. Crafting modern, responsive, and user-friendly websites.</p>
-                </div>
-                <div class="footer-social">
-                    <h4>Available on Social Media</h4>
-                    <a href="https://github.com/abhayd95" target="_blank" rel="noopener" class="outer-shadow"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/abhay-tiwari-545a57358" target="_blank" rel="noopener" class="outer-shadow"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="https://x.com/bytecraft_abhay" target="_blank" rel="noopener" class="outer-shadow"><i class="fab fa-twitter"></i></a>
-                    <a href="https://www.instagram.com/cybe.rboi/" target="_blank" rel="noopener" class="outer-shadow"><i class="fab fa-instagram"></i></a>
-                </div>
-                <div class="footer-contact">
-                    <h4>Contact</h4>
-                    <p>Email: <a href="mailto:at546714@gmail.com">abhayviruse@gmail.com</a></p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Abhay Tiwari. All rights reserved.</p>
-            </div>
+      <div class="container">
+        <div class="footer-row">
+          <div class="footer-about">
+            <h3>Abhay Tiwari</h3>
+            <p>Passionate Web Developer & Designer. Crafting modern, responsive, and user-friendly websites.</p>
+          </div>
+          <div class="footer-social">
+            <h4>Available on Social Media</h4>
+            <a href="https://github.com/abhayd95" target="_blank" rel="noopener" class="outer-shadow"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/abhay-tiwari-545a57358" target="_blank" rel="noopener" class="outer-shadow"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://x.com/bytecraft_abhay" target="_blank" rel="noopener" class="outer-shadow"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/cybe.rboi/" target="_blank" rel="noopener" class="outer-shadow"><i class="fab fa-instagram"></i></a>
+          </div>
+          <div class="footer-contact">
+            <h4>Contact</h4>
+            <p>Email: <a href="mailto:at546714@gmail.com" data-copy="at546714@gmail.com">abhayviruse@gmail.com</a></p>
+          </div>
         </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Abhay Tiwari. All rights reserved.</p>
+        </div>
+      </div>
     </div>
-</footer>
+  </footer>
+
+  <!-- First-Visit Download Modal -->
+  <div id="firstVisit" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="firstVisitTitle">
+    <div class="modal">
+      <header><div id="firstVisitTitle">Grab my resume?</div></header>
+      <div class="content"><p>Hey! Since it’s your first time here, would you like to download my resume now?</p></div>
+      <div class="actions">
+        <button id="maybeLater" class="btn btn-ghost">Maybe later</button>
+        <a id="downloadNow" class="btn btn-primary" href="Abhay tiwari-5.pdf" download>Download Resume</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Enhancements JS -->
+  <script>
+    // Scroll reveal
+    (function() {
+      const els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window) || !els.length) { els.forEach(el => el.classList.add('in-view')); return; }
+      const obs = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('in-view'); observer.unobserve(entry.target); } });
+      }, { threshold: 0.18, rootMargin: "0px 0px -60px 0px" });
+      els.forEach(el => obs.observe(el));
+    })();
+
+    // Back to top
+    (function() {
+      const btn = document.getElementById('backToTop');
+      const onScroll = () => { btn.style.display = window.scrollY > 400 ? 'grid' : 'none'; };
+      window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+      btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    })();
+
+    // Theme toggle
+    (function() {
+      const btn = document.getElementById('themeToggle'); if (!btn) return;
+      const icon = btn.querySelector('i'); const root = document.documentElement;
+      const stored = localStorage.getItem('theme') || ''; if (stored) root.setAttribute('data-theme', stored);
+      const applyIcon = () => { const cur = root.getAttribute('data-theme') || ''; icon.className = cur === 'dark' ? 'fas fa-sun' : 'fas fa-moon'; };
+      applyIcon();
+      btn.addEventListener('click', () => { const cur = root.getAttribute('data-theme'); const next = cur === 'dark' ? 'light' : 'dark';
+        if (next) root.setAttribute('data-theme', next); else root.removeAttribute('data-theme');
+        localStorage.setItem('theme', next); applyIcon();
+      });
+    })();
+
+    // First-visit download prompt
+    (function() {
+      const KEY = 'ab_portfolio_first_visit_shown_v1';
+      const shown = localStorage.getItem(KEY);
+      const modal = document.getElementById('firstVisit');
+      const download = document.getElementById('downloadNow');
+      const later = document.getElementById('maybeLater');
+
+      function openModal() { modal.style.display = 'flex'; const f = modal.querySelectorAll('a, button'); if (f.length) f[f.length - 1].focus(); }
+      function closeModal() { modal.style.display = 'none'; }
+
+      if (!shown) setTimeout(openModal, 900);
+      download.addEventListener('click', () => { localStorage.setItem(KEY, '1'); closeModal(); });
+      later.addEventListener('click', () => { localStorage.setItem(KEY, '1'); closeModal(); });
+      modal.addEventListener('click', (e) => { if (e.target === modal) { localStorage.setItem(KEY, '1'); closeModal(); } });
+      window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.style.display === 'flex') { localStorage.setItem(KEY, '1'); closeModal(); } });
+    })();
+
+    // Smooth scroll anchors
+    (function() {
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', function(e) {
+          const id = this.getAttribute('href').slice(1);
+          const target = document.getElementById(id);
+          if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); history.pushState(null, '', '#' + id); }
+        });
+      });
+    })();
+
+    // Tabs (Education / Experience)
+    (function () {
+      const tabs = document.querySelectorAll('.about-tabs .tab-item');
+      const allContents = document.querySelectorAll('.about-section .tab-content');
+      function showTab(targetSelector) {
+        tabs.forEach(t => t.classList.remove('active'));
+        allContents.forEach(c => c.classList.remove('active'));
+        const btn = Array.from(tabs).find(t => t.dataset.target === targetSelector);
+        if (btn) btn.classList.add('active');
+        const target = document.querySelector(targetSelector);
+        if (target) target.classList.add('active');
+      }
+      tabs.forEach(tab => tab.addEventListener('click', () => showTab(tab.dataset.target)));
+      // default
+      showTab('.education');
+    })();
+    
+ 
+    
+  </script>
+
 </body>
 </html>

@@ -1,137 +1,217 @@
-// ========== Preloader ==========
-window.addEventListener('load', function () {
-  const preloader = document.querySelector('.preloader');
-  if (preloader) {
-    preloader.classList.add('fade-out');
-    setTimeout(() => {
-      preloader.style.display = 'none';
-    }, 600);
-  }
+/* ========= UTILITIES ========= */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+/* ========= PRELOADER ========= */
+window.addEventListener('load', () => {
+  const pre = $('.preloader');
+  if (pre) pre.style.display = 'none';
+
+  // Ensure images are lazy if not declared in HTML
+  $$('img').forEach(img => {
+    if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+    if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
+  });
 });
 
-// ========== Theme Light & Dark Mode ==========
-const dayNightToggle = document.querySelector('.day-night');
+/* ========= MOBILE NAV ========= */
+(() => {
+  const nav = $('.nav-menu');
+  const openBtn = $('.hamburger-btn');
+  const closeBtn = $('.close-nav-menu');
+  const fade = $('.fade-out-effect');
 
-function updateIcon() {
-  const icon = document.querySelector('.day-night i');
-  if (!icon) return;
-  icon.className = document.body.classList.contains('dark') ? 'fas fa-sun' : 'fas fa-moon';
-}
+  const open = () => {
+    nav.classList.add('open');
+    document.body.classList.add('stop-scrolling');
+  };
+  const close = () => {
+    nav.classList.remove('open');
+    document.body.classList.remove('stop-scrolling');
+    if (fade) {
+      fade.classList.add('active');
+      setTimeout(() => fade.classList.remove('active'), 300);
+    }
+  };
 
-function themeMode() {
-  // Check for saved theme preference or use preferred color scheme
-  const savedTheme = localStorage.getItem('theme');
+  openBtn?.addEventListener('click', open);
+  closeBtn?.addEventListener('click', close);
+
+  // close on outside click
+  document.addEventListener('click', (e) => {
+    if (!nav?.classList.contains('open')) return;
+    const inside = e.target.closest('.nav-menu-inner') || e.target.closest('.hamburger-btn');
+    if (!inside) close();
+  });
+})();
+
+/* ========= SMOOTH SCROLL + ACTIVE LINK ========= */
+(() => {
+  const links = $$('.nav-menu .link-item, .home-text a.link-item');
+  const header = $('.header');
+
+  function smoothTo(id) {
+    const el = id ? $(id) : null;
+    if (!el) return;
+    const y = el.getBoundingClientRect().top + window.pageYOffset - (header?.offsetHeight || 0) - 8;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  }
+
+  links.forEach(a => {
+    a.addEventListener('click', (e) => {
+      const href = a.getAttribute('href');
+      if (href?.startsWith('#')) {
+        e.preventDefault();
+        smoothTo(href);
+        // close nav if open (mobile)
+        const nav = $('.nav-menu');
+        if (nav?.classList.contains('open')) $('.close-nav-menu')?.click();
+      }
+    });
+  });
+
+  // highlight as you scroll
+  const sections = $$('.section, .about-section, .service-section, .portfolio-section');
+  const menuLinks = $$('.nav-menu .link-item');
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const id = '#' + (entry.target.id || '');
+      if (entry.isIntersecting) {
+        menuLinks.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector(`.nav-menu .link-item[href="${id}"]`);
+        active?.classList.add('active');
+      }
+    });
+  }, { threshold: 0.6 });
+
+  sections.forEach(sec => obs.observe(sec));
+})();
+
+/* ========= STICKY HEADER SHADOW ========= */
+(() => {
+  const header = $('.header');
+  const onScroll = () => {
+    if (!header) return;
+    if (window.scrollY > 10) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  };
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+
+/* ========= THEME (DARK/LIGHT) ========= */
+(() => {
+  const btn = $('#themeToggle');
+  const root = document.documentElement;
+  const KEY = 'theme-preference';
+
+  const apply = (mode) => {
+    root.setAttribute('data-theme', mode);
+    if (btn) {
+      const icon = btn.querySelector('i');
+      if (icon) icon.className = mode === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    }
+  };
+
+  const saved = localStorage.getItem(KEY);
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  
-  if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-    document.body.classList.add('dark');
-  } else {
-    document.body.classList.remove('dark');
-  }
-  updateIcon();
-}
+  apply(saved || (prefersDark ? 'dark' : 'light'));
 
-if (dayNightToggle) {
-  dayNightToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark');
-    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-    updateIcon();
+  btn?.addEventListener('click', () => {
+    const current = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    apply(next);
+    localStorage.setItem(KEY, next);
   });
-}
+})();
 
-// Initialize theme
-themeMode();
+/* ========= BACK TO TOP ========= */
+(() => {
+  const btn = $('#backToTop');
+  const toggle = () => {
+    if (!btn) return;
+    btn.style.display = window.scrollY > 400 ? 'grid' : 'none';
+  };
+  btn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  document.addEventListener('scroll', toggle, { passive: true });
+  toggle();
+})();
 
-// ========== Navigation Menu ==========
-const navMenu = document.querySelector('.nav-menu');
-const navMenuToggler = document.querySelector('.hamburger-btn');
-const navCloseBtn = document.querySelector('.close-nav-menu');
-const fadeOutEffect = document.querySelector('.fade-out-effect');
+/* ========= PORTFOLIO LIGHTBOX ========= */
+(() => {
+  const items = $$('.portfolio-item .portfolio-img img');
+  if (!items.length) return;
 
-function toggleMenu() {
-  navMenu.classList.toggle('open');
-  fadeOutEffect.classList.toggle('active');
-  document.body.classList.toggle('hidden-scrolling');
-}
+  // create modal once
+  const modal = document.createElement('div');
+  modal.style.cssText = `
+    position:fixed;inset:0;background:rgba(0,0,0,.8);
+    display:none;align-items:center;justify-content:center;z-index:9998;padding:24px;
+  `;
+  const img = document.createElement('img');
+  img.style.cssText = 'max-width:90vw;max-height:85vh;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,.5)';
+  modal.appendChild(img);
+  document.body.appendChild(modal);
 
-function closeMenu() {
-  navMenu.classList.remove('open');
-  fadeOutEffect.classList.remove('active');
-  document.body.classList.remove('hidden-scrolling');
-}
+  const close = () => (modal.style.display = 'none');
+  modal.addEventListener('click', close);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 
-if (navMenuToggler) {
-  navMenuToggler.addEventListener('click', toggleMenu);
-}
+  items.forEach(i => {
+    i.style.cursor = 'zoom-in';
+    i.addEventListener('click', () => {
+      img.src = i.src;
+      modal.style.display = 'flex';
+    });
+  });
+})();
 
-if (navCloseBtn) {
-  navCloseBtn.addEventListener('click', closeMenu);
-}
+/* ========= COPY EMAIL (click to copy) ========= */
+(() => {
+  const el = document.querySelector('[data-copy]');
+  if (!el) return;
+  el.addEventListener('click', (e) => {
+    const txt = el.getAttribute('data-copy');
+    if (!txt) return;
+    e.preventDefault();
+    navigator.clipboard.writeText(txt).then(() => {
+      const prev = el.textContent;
+      el.textContent = 'Copied!';
+      setTimeout(() => (el.textContent = prev), 1200);
+    });
+  });
+})();
 
-if (fadeOutEffect) {
-  fadeOutEffect.addEventListener('click', closeMenu);
-}
-
-// Close menu when clicking on nav links
-document.addEventListener('click', (e) => {
-  if (e.target.classList.contains('link-item') && e.target.hash !== '') {
-    // Delay closing to allow hash change to happen
-    setTimeout(closeMenu, 300);
-  }
-});
-
-// ========== Active Menu Item on Scroll ==========
-const sections = document.querySelectorAll('.section');
-const navItems = document.querySelectorAll('.nav-menu .link-item');
-
-function setActiveMenuItem() {
-  let current = '';
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop;
-    const sectionHeight = section.clientHeight;
-    
-    if (window.pageYOffset >= sectionTop - sectionHeight / 3) {
-      current = section.getAttribute('id');
+/* ========= TRACK RESUME DOWNLOAD (gtag if available) ========= */
+(() => {
+  const resume = document.querySelector('a[href$=".pdf"]');
+  if (!resume) return;
+  resume.addEventListener('click', () => {
+    if (typeof gtag === 'function') {
+      gtag('event', 'resume_download', { file: resume.getAttribute('href') });
+    } else {
+      console.log('[analytics] resume_download:', resume.getAttribute('href'));
     }
   });
+})();
 
-  navItems.forEach(item => {
-    item.classList.remove('active');
-    if (item.getAttribute('href') === `#${current}`) {
-      item.classList.add('active');
-    }
-  });
-}
+/* ========= REVEAL ON SCROLL (simple) ========= */
+(() => {
+  // add .reveal to blocks you want animated via CSS
+  const revealables = $$(
+    '.service-item, .portfolio-item, .about-img, .about-info, .home-text, .home-img'
+  );
+  revealables.forEach(el => el.classList.add('reveal'));
 
-// Set active item on initial load
-setActiveMenuItem();
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        en.target.classList.add('reveal-in');
+        obs.unobserve(en.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
-window.addEventListener('scroll', setActiveMenuItem);
-
-// ========== About Tabs ==========
-const tabContainer = document.querySelector('.about-tabs');
-
-if (tabContainer) {
-  const tabItems = tabContainer.querySelectorAll('.tab-item');
-  const tabContents = document.querySelectorAll('.tab-content');
-
-  tabContainer.addEventListener('click', (e) => {
-    const clickedTab = e.target.closest('.tab-item');
-    if (!clickedTab) return;
-
-    // Remove active class from all tabs and contents
-    tabItems.forEach(tab => tab.classList.remove('active'));
-    tabContents.forEach(content => content.classList.remove('active'));
-
-    // Add active class to clicked tab
-    clickedTab.classList.add('active');
-    
-    // Get the target content selector and activate it
-    const target = clickedTab.getAttribute('data-target');
-    if (target) {
-      document.querySelector(target).classList.add('active');
-    }
-  });
-}
-
-// Rest of your JavaScript code...
+  revealables.forEach(el => obs.observe(el));
+})();
