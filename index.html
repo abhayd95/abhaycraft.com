@@ -156,29 +156,56 @@
                 <div class="logo">
                     <a href="index.html">Abhay_virus</a>
                 </div>
-                <div class="hamburger-btn outer-shadow hover-in-shadow">
-                    <span></span>
-                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="desktop-nav">
+                    <ul>
+                        <li><a href="#home" class="nav-link active">Home</a></li>
+                        <li><a href="#about" class="nav-link">About</a></li>
+                        <li><a href="#services" class="nav-link">Services</a></li>
+                        <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+                        <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+                        <li><a href="#blog" class="nav-link">Blog</a></li>
+                        <li><a href="#contact" class="nav-link">Contact</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Mobile Hamburger Button -->
+                <button id="mobile-nav-toggle" class="hamburger-btn neumorphic-btn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-nav">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- Navigation Menu -->
-    <nav class="nav-menu">
-        <div class="close-nav-menu outer-shadow hover-in-shadow">&times;</div>
-        <div class="nav-menu-inner">
-            <ul>
-                <li><a href="#home" class="link-item inner-shadow active">Home</a></li>
-                <li><a href="#about" class="link-item outer-shadow hover-in-shadow">About</a></li>
-                <li><a href="#services" class="link-item outer-shadow hover-in-shadow">Services</a></li>
-                <li><a href="#portfolio" class="link-item outer-shadow hover-in-shadow">Portfolio</a></li>
-                <li><a href="#testimonials" class="link-item outer-shadow hover-in-shadow">Testimonials</a></li>
-                <li><a href="#blog" class="link-item outer-shadow hover-in-shadow">Blog</a></li>
-                <li><a href="#contact" class="link-item outer-shadow hover-in-shadow">Contact</a></li>
-            </ul>
-        </div>
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobile-nav-overlay"></div>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav" aria-label="Bottom navigation">
+        <a href="#home" class="bottom-nav-item active" data-section="home">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="#services" class="bottom-nav-item" data-section="services">
+            <i class="fas fa-cogs"></i>
+            <span>Services</span>
+        </a>
+        <a href="#portfolio" class="bottom-nav-item" data-section="portfolio">
+            <i class="fas fa-briefcase"></i>
+            <span>Portfolio</span>
+        </a>
+        <a href="#about" class="bottom-nav-item" data-section="about">
+            <i class="fas fa-user"></i>
+            <span>About</span>
+        </a>
+        <a href="#contact" class="bottom-nav-item" data-section="contact">
+            <i class="fas fa-envelope"></i>
+            <span>Contact</span>
+        </a>
     </nav>
-    <div class="fade-out-effect"></div>
 
     <!-- Theme Toggle + Back To Top -->
     <button id="themeToggle" class="theme-toggle outer-shadow hover-in-shadow" aria-label="Toggle theme" title="Toggle theme" style="position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:9999;border-radius:50%;width:44px;height:44px;display:grid;place-items:center;background:#fff;border:none;cursor:pointer;">

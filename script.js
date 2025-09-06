@@ -31,43 +31,59 @@ setTimeout(() => {
     }
 }, 3000);
 
-/* ========= MOBILE NAV ========= */
+/* ========= MOBILE BOTTOM NAV ========= */
 (() => {
-    const nav = $('.nav-menu');
-    const openBtn = $('.hamburger-btn');
-    const closeBtn = $('.close-nav-menu');
-    const fade = $('.fade-out-effect');
+    const bottomNavItems = $$('.bottom-nav-item');
+    const desktopNavLinks = $$('.desktop-nav .nav-link');
 
-    const open = () => {
-        if (!nav) return;
-        nav.classList.add('open');
-        document.body.classList.add('stop-scrolling');
-    };
-    const close = () => {
-        if (!nav) return;
-        nav.classList.remove('open');
-        document.body.classList.remove('stop-scrolling');
-        if (fade) {
-            fade.classList.add('active');
-            setTimeout(() => fade.classList.remove('active'), 300);
+    // Update active nav links based on scroll position
+    const updateActiveNav = () => {
+        const sections = $$('.section, .about-section, .service-section, .portfolio-section, .testimonials-section, .blog-section');
+        const allNavLinks = [...desktopNavLinks, ...bottomNavItems];
+
+        if (sections.length && allNavLinks.length && 'IntersectionObserver' in window) {
+            const obs = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const id = '#' + (entry.target.id || '');
+                    if (entry.isIntersecting && id !== '#') {
+                        allNavLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { threshold: 0.6 });
+            sections.forEach(sec => obs.observe(sec));
         }
     };
-    if (openBtn) openBtn.addEventListener('click', open);
-    if (closeBtn) closeBtn.addEventListener('click', close);
 
-    // close on outside click
-    document.addEventListener('click', (e) => {
-        if (!nav || !nav.classList.contains('open')) return;
-        const inside = e.target.closest('.nav-menu-inner') || e.target.closest('.hamburger-btn');
-        if (!inside) close();
+    // Add click handlers for bottom nav items
+    bottomNavItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            const href = item.getAttribute('href');
+            if (href && href.length > 1) {
+                const target = document.querySelector(href);
+                if (target) {
+                    const header = document.querySelector('.header');
+                    const headerHeight = header ? header.offsetHeight : 0;
+                    const y = target.getBoundingClientRect().top + window.pageYOffset - headerHeight - 8;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                }
+            }
+        });
     });
+
+    updateActiveNav();
 })();
 
 /* ========= SMOOTH SCROLL + ACTIVE LINK ========= */
 (() => {
     try {
         const header = $('.header');
-        const menuLinks = $$('.nav-menu .link-item');
+        const allNavLinks = $$('.desktop-nav .nav-link, .bottom-nav-item');
 
         const smoothTo = (hash) => {
             const el = hash ? $(hash) : null;
@@ -84,25 +100,23 @@ setTimeout(() => {
                 if (href ? .length > 1) {
                     e.preventDefault();
                     smoothTo(href);
-
-                    // close nav if open (mobile) when clicking links inside nav/home-cta
-                    const inNav = a.closest('.nav-menu') || a.closest('.home-text');
-                    const nav = $('.nav-menu');
-                    if (inNav && nav ? .classList.contains('open')) $('.close-nav-menu') ? .click();
                 }
             });
         });
 
-        // highlight as you scroll
-        const sections = $$('.section, .about-section, .service-section, .portfolio-section');
-        if (sections.length && menuLinks.length && 'IntersectionObserver' in window) {
+        // Highlight active nav links as you scroll
+        const sections = $$('.section, .about-section, .service-section, .portfolio-section, .testimonials-section, .blog-section');
+        if (sections.length && allNavLinks.length && 'IntersectionObserver' in window) {
             const obs = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     const id = '#' + (entry.target.id || '');
                     if (entry.isIntersecting && id !== '#') {
-                        menuLinks.forEach(a => a.classList.remove('active'));
-                        const active = document.querySelector(`.nav-menu .link-item[href="${id}"]`);
-                        active ? .classList.add('active');
+                        allNavLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === id) {
+                                link.classList.add('active');
+                            }
+                        });
                     }
                 });
             }, { threshold: 0.6 });
