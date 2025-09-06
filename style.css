@@ -2143,23 +2143,28 @@ img {
 }
 
 
-/* Portfolio Grid Layout */
+/* Portfolio Grid Layout - Fixed */
 
 .portfolio-section .portfolio-items {
-    display: grid;
+    display: grid !important;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
     padding: 0 15px;
+    margin-top: 40px;
+    width: 100%;
 }
 
 .portfolio-section .portfolio-item {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     background: var(--bg-black-100);
     border-radius: 15px;
     overflow: hidden;
     transition: all 0.3s ease;
     box-shadow: var(--outer-shadow);
+    padding: 0 !important;
+    flex: none !important;
+    max-width: none !important;
 }
 
 .portfolio-section .portfolio-item:hover {
@@ -2177,6 +2182,7 @@ img {
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease;
+    border-radius: 0;
 }
 
 .portfolio-section .portfolio-item:hover .portfolio-img img {
@@ -2209,26 +2215,52 @@ img {
 .portfolio-section .portfolio-info .btn-1 {
     align-self: flex-start;
     margin-top: auto;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.portfolio-section .portfolio-info .btn-1:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(236, 24, 57, 0.3);
 }
 
 
-/* Responsive Portfolio Grid */
+/* Responsive Portfolio Grid - Fixed */
 
-@media (max-width: 768px) {
+@media (max-width: 576px) {
     .portfolio-section .portfolio-items {
         grid-template-columns: 1fr;
         gap: 15px;
+        padding: 0 10px;
+    }
+}
+
+@media (min-width: 577px) and (max-width: 768px) {
+    .portfolio-section .portfolio-items {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1199px) {
+    .portfolio-section .portfolio-items {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
     }
 }
 
 @media (min-width: 1200px) {
     .portfolio-section .portfolio-items {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
     }
 }
 
 @media (min-width: 1400px) {
     .portfolio-section .portfolio-items {
         grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
     }
 }
